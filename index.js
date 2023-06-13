@@ -20,6 +20,8 @@ export let user = getUserFromLocalStorage();
 export let page = null;
 export let posts = [];
 
+// получение токена если user есть функция -
+//возвращает токен если нет функция возвращает undefined
 const getToken = () => {
   const token = user ? `Bearer ${user.token}` : undefined;
   return token;

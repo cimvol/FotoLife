@@ -4,7 +4,21 @@ import { posts, goToPage } from "../index.js";
 
 export function renderPostsPageComponent({ appEl }) {
   // TODO: реализовать рендер постов из api
-  console.log("Актуальный список постов:", posts);
+  const fetchPromise = fetch ("https://webdev-hw-api.vercel.app/api/v1/prod/instapro", 
+  {
+    method: "GET",
+  });
+  //console.log("Актуальный список постов:", posts);
+
+
+  fetchPromise.then((response) => {
+    console.log(fetchPromise);
+
+  })
+  
+
+
+
 
   /**
    * TODO: чтобы отформатировать дату создания поста в виде "19 минут назад"

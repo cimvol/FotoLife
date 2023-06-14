@@ -1,14 +1,15 @@
 import { renderUploadImageComponent } from "./upload-image-component.js";
 import { addPost } from "../api.js";
 
-export function renderAddPostPageComponent({ appEl, onAddPostClick,  }) {
+export function renderAddPostPageComponent({ appEl, onAddPostClick }) {
+  let imageUrl = "";
   const render = () => {
     // TODO: Реализовать страницу добавления поста
     const appHtml = `
     <div class="page-container">
       <div class="header-container"> </div>
       Cтраница добавления поста
-      <textarea class="post-discript"></textarea>
+      <textarea class="post-descript"></textarea>
       <button class="button" id="add-button">Добавить</button>
     </div>
   `;
@@ -16,24 +17,22 @@ export function renderAddPostPageComponent({ appEl, onAddPostClick,  }) {
     appEl.innerHTML = appHtml;
 
     const headerContainerElement = document.querySelector(".header-container");
-
     renderUploadImageComponent({
       element: headerContainerElement,
-      onImageUrlChange: (URL) => {
-        console.log(URL);
+      onImageUrlChange: (newImageUrl) => {
+        imageUrl = newImageUrl;
+        console.log(imageUrl);
       },
     });
 
     // Блок добавления нового поста
     document.getElementById("add-button").addEventListener("click", () => {
-      const postDiscriptionElement = document.querySelector(".post-discript");
-      const postDiscription = postDiscriptionElement.value;
-      // Где брать imageUrl???
-      addPost(postDiscription, imageUrl, token);
+      const postDescriptionElement = document.querySelector(".post-descript");
+      const postDescription = postDescriptionElement.value;
       render();
 
       onAddPostClick({
-        description: postDiscription,
+        description: postDescription,
         imageUrl: imageUrl,
       });
     });

@@ -6,11 +6,11 @@ const postsHost = `${baseHost}/api/v1/${personalKey}/instapro`;
 
 
 // Функция добавления нового поста
-export function addPost ({postDiscription, imageUrl, token}) {
+export function addPost ({description, imageUrl, token}) {
   return fetch(postsHost,{
     method: "POST",
     body: JSON.stringify ({
-      postDiscription,
+      description,
       imageUrl,
   }),
   headers: {

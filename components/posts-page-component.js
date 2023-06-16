@@ -134,7 +134,7 @@ appEl.innerHTML = appHtml;
     element: document.querySelector(".header-container"),
   });
 
-  if(allPostsUserPage) {
+  // if(allPostsUserPage) {
     for(let likeButton of document.querySelectorAll(".like-button")) {
       likeButton.addEventListener('click', () => {
         console.log("лайк");
@@ -150,8 +150,7 @@ appEl.innerHTML = appHtml;
       })
     };
   }
-  if (allPostsUserPage) { 
-    
+  // if (allPostsUserPage) { 
   for (let userEl of document.querySelectorAll(".post-header")) {
     userEl.addEventListener("click", () => {
       goToPage(USER_POSTS_PAGE, {
@@ -159,5 +158,5 @@ appEl.innerHTML = appHtml;
       });
     });
   }
-}
-}
+// }
+// }

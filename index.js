@@ -127,7 +127,7 @@ const renderApp = () => {
     return renderPostsPageComponent({
       appEl,
       posts,
-      allPostUserPage: true,
+      allPostsUserPage: true,
 
     });
   }

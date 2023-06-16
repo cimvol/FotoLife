@@ -22,7 +22,7 @@ export let posts = [];
 
 // получение токена если user есть функция -
 //возвращает токен если нет функция возвращает undefined
-const getToken = () => {
+export const getToken = () => {
   const token = user ? `Bearer ${user.token}` : undefined;
   return token;
 };
@@ -71,9 +71,12 @@ export const goToPage = (newPage, data) => {
     if (newPage === USER_POSTS_PAGE) {
       // TODO: реализовать получение постов юзера из API
       console.log("Открываю страницу пользователя: ", data.userId);
-      page = USER_POSTS_PAGE;
-      posts = [];
-      return renderApp();
+      getPostsUser({ token: getToken(), id: data.userId })
+      then((userPosts) => {
+        page = USER_POSTS_PAGE;
+        posts = userPosts;
+        renderApp();
+      });
     }
 
     page = newPage;
@@ -123,15 +126,21 @@ const renderApp = () => {
   if (page === POSTS_PAGE) {
     return renderPostsPageComponent({
       appEl,
-      // передать посты 
+      posts,
+      allPostUserPage: true,
+
     });
   }
 
   if (page === USER_POSTS_PAGE) {
-    // TODO: реализовать страницу фотографию пользвателя
-    appEl.innerHTML = "Здесь будет страница фотографий пользователя";
-    return;
+    return renderPostsPageComponent({
+      appEl,
+      posts,
+      allPostsUserPage: true,
+    });
+    // // TODO: реализовать страницу фотографию пользвателя
+    // appEl.innerHTML = "Здесь будет страница фотографий пользователя";
+    // return;
   }
 };
-
 goToPage(POSTS_PAGE);

@@ -1,53 +1,14 @@
 import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
-import { posts, goToPage } from "../index.js";
+import { posts, goToPage, getToken } from "../index.js";
+import { addLike, deletelike, getPosts } from "../api.js";
 
 const postsEl = document.querySelector(".posts");
 
-export function renderPostsPageComponent({ appEl }) {
+export function renderPostsPageComponent({ appEl, posts, allPostsUserPage }) {
   // TODO: реализовать рендер постов из api
   // TODO: чтобы отформатировать дату создания поста в виде "19 минут назад"
   //  можно использовать https://date-fns.org/v2.29.3/docs/formatDistanceToNow
-
-  const postsHtml = posts.map((post) => {
-    return `        <li class="post">
-                    <div class="post-header" data-user-id=${post.user.id}>
-                        <img src="${post.user.imageUrl}" class="post-header__user-image">
-                        <p class="post-header__user-name">${post.user.name}</p>
-                    </div>
-                    <div class="post-image-container">
-                      <img class="post-image" src="${post.imageUrl}">
-                    </div>
-                    <div class="post-likes">
-                      <button data-post-id=${post.id} data-liked="${post.isLiked}" class="like-button">
-                    ${post.isliked ? `  <img src="./assets/images/like-active.svg">` : `  <img src="./assets/images/like-not-active.svg">`}
-                      </button>
-                      <p class="post-likes-text">
-                        Нравится: <strong>${post.likes.length}</strong>
-                      </p>
-                    </div>
-                    <p class="post-text">
-                      <span class="user-name">${post.user.name}</span>
-                      ${post.description}
-                    </p>
-                    <p class="post-date">
-                      19 минут назад
-                    </p>
-                  </li>`
-  })
-    .join("")
-
-    const appHtml = `
-    <div class="page-container">
-      <div class="header-container"></div>
-      <ul class="posts">
-      ${postsHtml}
-     </ul>
-    </div>`;
-
-appEl.innerHTML = appHtml;
-
-
 
   // const appHtml = `
   //             <div class="page-container">
@@ -130,11 +91,48 @@ appEl.innerHTML = appHtml;
   //               </ul>
   //             </div>`;
 
+  const postsHtml = posts.map((post) => {
+    return `        <li class="post">
+                    <div class="post-header" data-user-id=${post.user.id}>
+                        <img src="${post.user.imageUrl}" class="post-header__user-image">
+                        <p class="post-header__user-name">${post.user.name}</p>
+                    </div>
+                    <div class="post-image-container">
+                      <img class="post-image" src="${post.imageUrl}">
+                    </div>
+                    <div class="post-likes">
+                      <button data-post-id=${post.id} data-liked="${post.isLiked}" class="like-button">
+                    ${post.isliked ? `  <img src="./assets/images/like-active.svg">` : `  <img src="./assets/images/like-not-active.svg">`}
+                      </button>
+                      <p class="post-likes-text">
+                        Нравится: <strong>${post.likes.length}</strong>
+                      </p>
+                    </div>
+                    <p class="post-text">
+                      <span class="user-name">${post.user.name}</span>
+                      ${post.description}
+                    </p>
+                    <p class="post-date">
+                      19 минут назад
+                    </p>
+                  </li>`
+  }).join("")
+
+    const  appHtml = `
+    <div class="page-container">
+      <div class="header-container"></div>
+      <ul class="posts">
+      ${postsHtml}
+     </ul>
+    </div>`;
+
+appEl.innerHTML = appHtml;
+
   renderHeaderComponent({
     element: document.querySelector(".header-container"),
   });
 
-  // if(allPostsUserPage) {
+  if(allPostsUserPage) {
     for(let likeButton of document.querySelectorAll(".like-button")) {
       likeButton.addEventListener('click', () => {
         console.log("лайк");
@@ -150,7 +148,7 @@ appEl.innerHTML = appHtml;
       })
     };
   }
-  // if (allPostsUserPage) { 
+  if (allPostsUserPage) { 
   for (let userEl of document.querySelectorAll(".post-header")) {
     userEl.addEventListener("click", () => {
       goToPage(USER_POSTS_PAGE, {
@@ -158,5 +156,5 @@ appEl.innerHTML = appHtml;
       });
     });
   }
-// }
-// }
+ }
+}

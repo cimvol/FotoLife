@@ -2,6 +2,7 @@ import { USER_POSTS_PAGE } from "../routes.js";
 import { renderHeaderComponent } from "./header-component.js";
 import { posts, goToPage, getToken } from "../index.js";
 import { addLike, deletelike, getPosts } from "../api.js";
+import { renderApp } from "../index.js";
 
 const postsEl = document.querySelector(".posts");
 
@@ -138,12 +139,14 @@ appEl.innerHTML = appHtml;
         console.log("лайк");
         if(likeButton.dataset.liked === true) {
           deletelike( {token:getToken(), id: likeButton.dataset.postId }).then(()=> {
-
+            getPosts( {token:getToken()} );
           })
+          renderApp();
         } else {
           addLike( {token: getToken(), id: likeButton.dataset.postId }).then(() => {
-
+            getPosts( {token:getToken()} );
           })
+          renderApp();
         }
       })
     };
@@ -158,3 +161,4 @@ appEl.innerHTML = appHtml;
   }
  }
 }
+
